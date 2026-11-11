@@ -172,6 +172,21 @@ img.pixel, .logo, .brand img { image-rendering: pixelated; }
 .lead { max-width: 36ch; margin: 0 auto; color: var(--text-2); font-size: var(--fs-lg); text-wrap: balance; }
 .status { margin: var(--s-4) 0 0; color: var(--muted); font-size: var(--fs-sm); }
 
+/* 404: the hero layout with a plain heading and one primary action */
+.not-found h1 { margin: var(--s-6) 0 var(--s-2); font-size: var(--fs-2xl); font-weight: var(--fw-strong); line-height: var(--lh-tight); }
+.actions { margin: var(--s-6) 0 0; }
+
+/* primary action: the only filled accent control on a page */
+.button {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--control-h); padding: 0 var(--s-4); border-radius: var(--r-control);
+  background: var(--accent); color: var(--accent-ink);
+  font-weight: var(--fw-medium); text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.button:hover { background: var(--accent-hover); }
+.button:active { transform: scale(var(--press)); }
+
 /* sections */
 main section { padding: var(--s-10) 0 0; }
 main .wrap > section:last-child { padding-bottom: var(--s-16); }
