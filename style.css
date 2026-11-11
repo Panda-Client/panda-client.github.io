@@ -128,7 +128,10 @@ a {
   transition: color var(--dur-fast) var(--ease), text-decoration-color var(--dur-fast) var(--ease);
 }
 a:hover { text-decoration-color: var(--text); }
-a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* long URLs as link text must not push the page wider than the viewport */
+a { overflow-wrap: anywhere; }
+/* transparent outline keeps a visible ring in forced-colors mode */
+:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); border-radius: var(--r-control); }
 
 img.pixel, .logo, .brand img { image-rendering: pixelated; }
 
@@ -156,6 +159,12 @@ img.pixel, .logo, .brand img { image-rendering: pixelated; }
   color: var(--text-2); text-decoration: none; font-weight: var(--fw-medium);
 }
 .site-header nav a:hover { color: var(--text); }
+/* current page: text colour plus the panda scarf, a short accent bar */
+.site-header nav a[aria-current="page"] { color: var(--text); }
+.site-header nav a[aria-current="page"]::after {
+  content: ""; position: absolute; left: var(--s-2); right: var(--s-2); bottom: 0;
+  height: var(--scarf); background: var(--accent);
+}
 
 /* hero */
 .hero {
@@ -250,12 +259,17 @@ dl.services dd { margin: 0; color: var(--text-2); }
 .site-footer { border-top: 1px solid var(--line); padding: var(--s-8) 0 var(--s-10); color: var(--muted); font-size: var(--fs-sm); }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: var(--s-5); margin-bottom: var(--s-3); }
 .site-footer nav a { color: var(--muted); }
-.site-footer nav a:hover { color: var(--text); }
+.site-footer nav a:hover,
+.site-footer nav a[aria-current="page"] { color: var(--text); }
 
 @media (max-width: 560px) {
   .hero { padding: var(--s-12) var(--s-4); }
   .logo { width: var(--logo-sm); height: var(--logo-sm); }
-  .brand span { display: none; }
+  /* the wordmark text stays in the accessibility tree as the link's name */
+  .brand span {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
   dl.services { grid-template-columns: 1fr; gap: 0; }
   dl.services dd { margin-bottom: var(--s-3); }
 }
