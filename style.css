@@ -1,14 +1,104 @@
+/* Panda tokens v1 — shared by pandalauncher.com, dashboard.pandalauncher.com and panda-client.github.io.
+   Source: PANDA/_redesign/tokens.css, derived from panda-client/docs/design-system.md (Draw/Ui/Motion)
+   and panda-client/renderer/style.css (easing, durations). Copy this block verbatim into each site and
+   keep all three in sync. Colours, sizes, radii and durations come only from these tokens.
+   Wordmark: "Panda" in --font-brand (Pixelify 600), text colour, never accent, never uppercase. */
 :root {
-  --bg: #0b0c0f;
-  --surface: #13151a;
-  --border: #262a33;
-  --text: #f4f4f1;
-  --muted: #a9adb6;
-  --green: #5ee08a;
-  --green-dim: #2f6b47;
-  --ink: #16171c;
   color-scheme: dark;
+
+  /* primitives: one neutral ramp + the panda green */
+  --gray-950: #0b0d11;
+  --gray-900: #14161d;
+  --gray-850: #1c2028;
+  --gray-800: #262b35;
+  --gray-750: #2a2f3a;
+  --gray-400: #8a93a2;
+  --gray-300: #a0a8b5;
+  --gray-200: #b8c0cc;
+  --gray-50:  #f2f4f8;
+  --green-400: #5ee08a;
+  --green-300: #7fe8a3;
+  --ink: #0c0e12;
+  --red-400: #ff6b6b;
+  --red-600: #c8363b;
+  --yellow-300: #ffd166;
+  --gold-400: #e8b84a;
+  --white: #ffffff;
+
+  /* semantic: surfaces */
+  --bg: var(--gray-950);            /* behind everything */
+  --surface: var(--gray-900);       /* cards, groups, fields */
+  --surface-2: var(--gray-850);     /* raised controls, secondary buttons */
+  --surface-hover: var(--gray-800); /* a surface under the pointer */
+  --track: var(--gray-750);         /* switch/slider/meter tracks */
+  --line: rgba(255, 255, 255, .08); /* hairlines */
+  --line-2: rgba(255, 255, 255, .15); /* stronger hairline, hover wash */
+  --scrim: rgba(11, 13, 17, .8);    /* behind dialogs */
+
+  /* semantic: text (all >= 4.5:1 on --bg, --surface and --surface-2) */
+  --text: var(--gray-50);
+  --text-2: var(--gray-200);
+  --muted: var(--gray-300);
+  --disabled: var(--gray-400);
+
+  /* semantic: accent = primary action, the chosen thing, focus, progress. Nothing else. */
+  --accent: var(--green-400);
+  --accent-hover: var(--green-300);
+  --accent-ink: var(--ink);         /* text on accent, 11.5:1 */
+
+  /* semantic: meaning only */
+  --danger: var(--red-400);         /* red text and icons */
+  --danger-fill: var(--red-600);    /* red buttons, white text 5.2:1 */
+  --warn: var(--yellow-300);
+  --gold: var(--gold-400);          /* Premium only */
+  --on-fill: var(--white);
+
+  /* spacing: 4px grid */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+  --s-8: 32px; --s-10: 40px; --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+
+  /* radii: control / card / panel; pill only for dots, switches and avatars */
+  --r-control: 4px;
+  --r-card: 8px;
+  --r-panel: 12px;
+  --r-pill: 999px;
+
+  /* type */
+  --font-text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-brand: "Pixelify", "Inter", system-ui, sans-serif; /* wordmark only */
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --fs-xs: 12px; --fs-sm: 14px; --fs-body: 16px; --fs-lg: 20px; --fs-xl: 24px; --fs-2xl: 32px;
+  --fs-hero: clamp(36px, 6vw, 56px);
+  --lh-tight: 1.15; --lh-body: 1.6;
+  --fw-regular: 400; --fw-medium: 500; --fw-strong: 600;
+  --measure: 70ch;
+
+  /* motion: same as ui/Motion.java and the launcher */
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --dur-fast: .14s;  /* hover, press, small fades */
+  --dur-base: .26s;  /* panels, menus, toasts */
+  --dur-slow: .35s;  /* entrances */
+  --press: .97;      /* scale on press */
+
+  /* focus and elevation */
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  --elev-pop: 0 12px 32px rgba(0, 0, 0, .45); /* menus, dialogs, toasts only */
+
+  /* components */
+  --scarf: 2px;            /* the panda scarf: accent bar under/beside the chosen thing */
+  --control-h: 40px;
+  --control-h-sm: 32px;
+  --nav-row-h: 36px;
+  --content-max: 1200px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0s; --dur-base: 0s; --dur-slow: 0s; --press: 1; }
+}
+
+/* fonts: self-hosted copies of panda-client/renderer/fonts, no external requests */
+@font-face { font-family: "Inter"; src: url(assets/fonts/inter.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Pixelify"; src: url(assets/fonts/pixelify-600.woff2) format("woff2"); font-weight: 600; font-display: swap; }
 
 * { box-sizing: border-box; }
 
@@ -19,12 +109,12 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font: var(--fs-body)/var(--lh-body) var(--font-text);
 }
 
-a { color: var(--green); text-underline-offset: 3px; }
+a { color: var(--accent); text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
-a:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 img.pixel, .logo, .brand img { image-rendering: pixelated; }
 
@@ -32,19 +122,18 @@ img.pixel, .logo, .brand img { image-rendering: pixelated; }
 
 .skip {
   position: absolute; left: 16px; top: -48px; z-index: 10;
-  padding: 8px 12px; background: var(--green); color: var(--ink); font-weight: 700;
+  padding: 8px 12px; background: var(--accent); color: var(--accent-ink); font-weight: 700;
 }
 .skip:focus { top: 8px; }
 
 /* header */
-.site-header { border-bottom: 1px solid var(--border); }
+.site-header { border-bottom: 1px solid var(--line); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
 .brand {
   display: inline-flex; align-items: center; gap: 10px;
   color: var(--text); text-decoration: none;
-  font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  font-family: var(--font-brand); font-weight: var(--fw-strong); font-size: var(--fs-lg);
 }
-.brand em, .wordmark span { color: var(--green); font-style: normal; }
 .site-header nav { display: flex; gap: 20px; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-weight: 600; }
 .site-header nav a:hover { color: var(--text); }
@@ -53,12 +142,12 @@ img.pixel, .logo, .brand img { image-rendering: pixelated; }
 .hero {
   position: relative; overflow: hidden;
   padding: 72px 16px 64px; text-align: center;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 .hero::before, .hero::after {
   content: ""; position: absolute; width: 260px; height: 260px; pointer-events: none;
   background: linear-gradient(135deg,
-    transparent 0 20%, var(--green) 20% 26%, transparent 26% 31%, var(--green-dim) 31% 37%, transparent 37%);
+    transparent 0 20%, var(--accent) 20% 26%, transparent 26% 31%, var(--surface-2) 31% 37%, transparent 37%);
 }
 .hero::before { top: 0; left: 0; }
 .hero::after { right: 0; bottom: 0; transform: rotate(180deg); }
@@ -66,17 +155,17 @@ img.pixel, .logo, .brand img { image-rendering: pixelated; }
 .logo { display: block; margin: 0 auto; }
 .wordmark {
   margin: 24px 0 8px;
-  font-size: clamp(2.4rem, 8vw, 4.2rem); font-weight: 800; line-height: 1.05;
-  letter-spacing: .08em; text-transform: uppercase;
+  font-family: var(--font-brand); font-size: var(--fs-hero); font-weight: var(--fw-strong);
+  line-height: var(--lh-tight);
 }
 .lead { max-width: 560px; margin: 0 auto; color: var(--muted); font-size: 1.15rem; }
 .badge {
   display: inline-flex; align-items: center; gap: 8px;
   margin: 24px 0 0; padding: 6px 12px;
-  border: 1px solid var(--border); background: var(--surface);
+  border: 1px solid var(--line); background: var(--surface);
   color: var(--muted); font-size: .9rem;
 }
-.dot { width: 8px; height: 8px; background: var(--green); }
+.dot { width: 8px; height: 8px; background: var(--accent); }
 
 /* sections */
 main section { padding: 40px 0 0; }
@@ -87,7 +176,7 @@ h2 {
   font-size: 1.3rem; line-height: 1.3; letter-spacing: .06em; text-transform: uppercase;
 }
 /* aligned to the first line when a heading wraps */
-h2::before { content: ""; flex: none; width: 10px; height: 10px; margin-top: .41em; background: var(--green); }
+h2::before { content: ""; flex: none; width: 10px; height: 10px; margin-top: .41em; background: var(--accent); }
 h3 { margin: 0 0 4px; font-size: 1.1rem; letter-spacing: .04em; text-transform: uppercase; }
 p { margin: 0 0 12px; }
 p:last-child { margin-bottom: 0; }
@@ -95,7 +184,7 @@ p:last-child { margin-bottom: 0; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .card {
   padding: 20px 22px;
-  background: var(--surface); border: 1px solid var(--border);
+  background: var(--surface); border: 1px solid var(--line);
   box-shadow: 4px 4px 0 #000;
 }
 .card > p { color: var(--muted); }
@@ -105,7 +194,7 @@ ul.squares:last-child { margin-bottom: 0; }
 ul.squares li { position: relative; margin: 8px 0; padding-left: 22px; }
 ul.squares li::before {
   content: ""; position: absolute; left: 2px; top: .62em;
-  width: 8px; height: 8px; background: var(--green-dim); outline: 1px solid var(--green);
+  width: 8px; height: 8px; background: var(--surface-2); outline: 1px solid var(--accent);
 }
 
 ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; }
@@ -114,13 +203,13 @@ ol.steps li::before {
   content: counter(step);
   position: absolute; left: 0; top: 0;
   display: grid; place-items: center; width: 30px; height: 30px;
-  background: var(--green); color: var(--ink); font-weight: 800;
-  box-shadow: 3px 3px 0 var(--green-dim);
+  background: var(--accent); color: var(--accent-ink); font-weight: 800;
+  box-shadow: 3px 3px 0 var(--surface-2);
 }
 
 .callout {
   margin-top: 20px; padding: 14px 16px;
-  background: rgba(94, 224, 138, .08); border-left: 4px solid var(--green);
+  background: rgba(94, 224, 138, .08); border-left: 4px solid var(--accent);
 }
 
 /* text pages */
@@ -135,7 +224,7 @@ dl.services dt { font-weight: 700; }
 dl.services dd { margin: 0; color: var(--muted); }
 
 /* footer */
-.site-footer { border-top: 1px solid var(--border); padding: 28px 0 40px; color: var(--muted); font-size: .85rem; }
+.site-footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: .85rem; }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 12px; }
 .site-footer nav a { color: var(--muted); }
 .site-footer nav a:hover { color: var(--text); }
