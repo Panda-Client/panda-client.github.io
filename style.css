@@ -125,11 +125,12 @@ a {
   color: var(--text);
   text-decoration-color: var(--muted);
   text-underline-offset: 3px;
+  overflow-wrap: anywhere; /* long URLs must not widen the page */
   transition: color var(--dur-fast) var(--ease), text-decoration-color var(--dur-fast) var(--ease);
 }
 a:hover { text-decoration-color: var(--text); }
-/* long URLs as link text must not push the page wider than the viewport */
-a { overflow-wrap: anywhere; }
+
+
 /* transparent outline keeps a visible ring in forced-colors mode */
 :focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); border-radius: var(--r-control); }
 
